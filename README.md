@@ -1,4 +1,9 @@
-# 📄 ollamaparser
+# ollamaparser
+
+> **Note**: 이 프로젝트는 [jh941213/ollama-document-parser](https://github.com/jh941213/ollama-document-parser)의 Fork 프로젝트입니다. 본 Fork에서는 **OpenAI API 및 vLLM 호환성** 기능을 추가하여 확장했습니다.
+
+---
+
 
 **고급 PDF 문서 파싱 시스템** — Layout Detection + OCR + Vision Language Model(VLM)을 결합하여 PDF를 지능형 구조화 문서로 변환
 
@@ -235,7 +240,7 @@ DocLayout-YOLO가 PDF 페이지에서 자동으로 요소를 감지한 결과:
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│                       ollamaparser                             │
+│                       docparser                             │
 ├───────────────────────────────────────────────────────────────┤
 │                                                                │
 │  Input Layer:                                                 │
@@ -423,13 +428,13 @@ OLLAMA_HOST=http://localhost:11434
 
 ```bash
 # 다른 OCR 모델 사용
-OCR_MODEL=custom-ocr:v2 uv run ollamaparser-parse --pdf document.pdf --out_dir ./output
+OCR_MODEL=custom-ocr:v2 uv run docparser-parse --pdf document.pdf --out_dir ./output
 
 # 다른 VLM 모델 사용
-VLM_MODEL=qwen3-vl:30b uv run ollamaparser-parse --pdf document.pdf --out_dir ./output
+VLM_MODEL=qwen3-vl:30b uv run docparser-parse --pdf document.pdf --out_dir ./output
 
 # 원격 Ollama 서버 사용
-OLLAMA_HOST=http://192.168.1.100:11434 uv run ollamaparser-parse --pdf document.pdf --out_dir ./output
+OLLAMA_HOST=http://192.168.1.100:11434 uv run docparser-parse --pdf document.pdf --out_dir ./output
 ```
 
 ---
@@ -439,7 +444,7 @@ OLLAMA_HOST=http://192.168.1.100:11434 uv run ollamaparser-parse --pdf document.
 ### 기본 실행
 
 ```bash
-uv run ollamaparser-parse \
+uv run docparser-parse \
   --pdf "document.pdf" \
   --out_dir ./output \
   --detector doclayout-yolo \
