@@ -37,7 +37,7 @@ def main():
             detector="doclayout-yolo",
             yolo_weights="juliozhao/DocLayout-YOLO-DocStructBench",
             yolo_from_pretrained=True,
-            ocr_provider="deepseek-ollama",
+            ocr_provider="glm-ocr",
             ocr_scope="page",
             page_end=1,
             vlm_provider="vlm-openai",
@@ -45,7 +45,8 @@ def main():
             vlm_use_image=True,
             execution_mode="parallel",
             parallel_workers=1,
-            md_style="final"
+            md_style="final",
+            save_detections=True,
         )
         print("[TEST] 파싱이 성공적으로 완료되었습니다.")
         

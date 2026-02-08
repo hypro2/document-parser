@@ -71,6 +71,15 @@ def _create_providers(
             transport=ollama_transport,
             timeout_sec=ollama_timeout_sec,
         )
+
+    elif ocr_provider == "glm-ocr":
+        ocr = OllamaOCR(
+            model="glm-ocr",
+            host=ollama_host,
+            transport=ollama_transport,
+            timeout_sec=ollama_timeout_sec,
+        )
+
     elif ocr_provider == "ocr-openai":
         ocr = OpenAIOcr(
             model=openai_ocr_model,
@@ -160,14 +169,23 @@ def _save_detections(
         annotated_path = det_dir / f"page_{asset.page_index + 1:04d}_yolo.{fmt}"
         
         try:
+            from PIL import Image
+            import numpy as np
+            
             if hasattr(pred, "plot"):
                 annotated = pred.plot(pil=True)
+                
+                # pred.plot()이 numpy 배열을 반환하는 경우 PIL Image로 변환
+                if isinstance(annotated, np.ndarray):
+                    annotated = Image.fromarray(annotated)
+                
+                # 이제 annotated는 PIL Image임이 보장됨
                 if fmt == "jpg":
                     annotated.convert("RGB").save(annotated_path, format="JPEG", quality=jpeg_quality)
                 else:
                     annotated.save(annotated_path)
             else:
-                from PIL import Image
+                # plot 메서드가 없는 경우
                 arr = pred.plot()
                 im = Image.fromarray(arr)
                 if fmt == "jpg":
